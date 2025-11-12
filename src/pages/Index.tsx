@@ -199,9 +199,9 @@ const Index = () => {
             className="shadow-medium"
             asChild
           >
-            <a href="mailto:contact@rdoyleconsultancy.com" className="inline-flex items-center">
+            <a href="mailto:contact@rdoyle.info" className="inline-flex items-center">
               <Mail className="mr-2 h-5 w-5" />
-              contact@rdoyleconsultancy.com
+              contact@rdoyle.info
             </a>
           </Button>
         </div>
