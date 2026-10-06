@@ -1,73 +1,45 @@
-# Welcome to your Lovable project
+# RDoyle Consultancy website
 
-## Project info
+The site at **www.rdoyle.info**. Plain HTML and CSS, no build step.
 
-**URL**: https://lovable.dev/projects/de6d13d7-cb5b-4e17-8c11-a4c76e8922a1
+| What | Where |
+|---|---|
+| The page | `index.html` |
+| Photo, logo, work screenshots | `assets/` |
+| Browser tab icons | `favicon.ico`, `favicon.svg`, `favicon-32.png`, `apple-touch-icon.png` |
+| How it gets to Krystal | `deploy/` |
 
-## How can I edit this code?
+## How updates reach the site (GitHub is the one true copy)
 
-There are several ways of editing your application.
+Krystal checks this repo every 15 minutes and copies any new commit on `main` into `public_html/rdoyle`, so your Mac doesn't need to be on.
 
-**Use Lovable**
+- **Quick edit on github.com** (any device): open `index.html`, press the pencil, edit, then "Commit changes". Live within 15 minutes.
+- **On the Mac:** edit, commit and `git push`. Live within 15 minutes.
+- **Want it live now?** ssh in and run `~/bin/rdoyle-pull.sh --force`.
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/de6d13d7-cb5b-4e17-8c11-a4c76e8922a1) and start prompting.
+Only the files above are ever copied. `README.md`, `CLAUDE.md` and `deploy/` never reach the web folder.
 
-Changes made via Lovable will be committed automatically to this repo.
+The deploy only adds and updates files. It never deletes anything in `public_html/rdoyle`, so The Deep End (`thedeepend/`) and anything else in there is left alone. If you remove or rename a file here, delete the old copy on the server yourself in cPanel's File Manager.
 
-**Use your preferred IDE**
+## On the server
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+ssh in the same way as for The Deep End (key `~/.ssh/krystal_thedeepend`, port 722):
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+```
+ssh -p 722 -i ~/.ssh/krystal_thedeepend shwt8yk63in5@cruitme.com
 ```
 
-**Edit a file directly in GitHub**
+- Log: `~/logs/rdoyle-pull.log` (a line only when something is deployed or goes wrong)
+- Deploy now: `~/bin/rdoyle-pull.sh --force`
+- The script is a copy of `deploy/server-pull.sh`. After changing that file, copy it to the server again (or rerun `deploy/setup-server.sh`).
+- Schedule: `crontab -l`
+- Backup of the old site from before this was set up: `~/backups/`
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+## First-time setup (once only)
 
-**Use GitHub Codespaces**
+See `deploy/setup-server.sh`. From Terminal on the Mac:
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
-
-This project is built with:
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/de6d13d7-cb5b-4e17-8c11-a4c76e8922a1) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+```
+ssh -p 722 -i ~/.ssh/krystal_thedeepend shwt8yk63in5@cruitme.com \
+  'git clone -q https://github.com/RaymondDoyle88/rdoyle-consultancy.git ~/repos/rdoyle-consultancy 2>/dev/null; bash ~/repos/rdoyle-consultancy/deploy/setup-server.sh'
+```
